@@ -3,17 +3,17 @@
 :warning: Everything between << >> needs to be replaced (remove << >> after replacing)
 
 # << Project Title >>
-## CS110 Final Project  << Semester, Year >>
+## CS110 Final Project Spring, 2024
 
 ## Team Members
 
-<< List team member names >>
+Caitlin Bullock and Anya Wester
 
 ***
 
 ## Project Description
 
-<< Give an overview of your project >>
+A game where you count the stars in the sky before time runs out 
 
 ***    
 
@@ -31,11 +31,11 @@
 
 ### Features
 
-1. << Feature 1 >>
-2. << Feature 2 >>
-3. << Feature 3 >>
-4. << Feature 4 >>
-5. << Feature 5 >>
+1. Timer
+2. Play button
+3. Randomly placed stars 
+4. Clicker feature
+5. Ending statement
 
 ### Classes
 
