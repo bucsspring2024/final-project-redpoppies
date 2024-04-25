@@ -45,6 +45,9 @@ A game where you count the stars in the sky before time runs out
 
 | Step                 |Procedure             |Expected Results                   |
 |----------------------|:--------------------:|----------------------------------:|
-|  1                   | Run Counter Program  |GUI window appears with count = 0  |
-|  2                   | click count button   | display changes to count = 1      |
+|  1                   | Start game           |GUI window appears with a statement that describes how to play and start button appears  |
+|  2                   | click start button   | the screen goes black and stars start to randomly appear, the timer also starts, and a counter is put in the bottom right corner |
+| 3 | Players click the stars| The stars disappear and the counter goes up by 1 each time a star is clicked
 etc...
+| 4| The timer runs out (after 30 seconds)| Statement appears saying how many starts you counted, and if it's greater than 10, you win!
+|5| Screen is clicked on the "end game" button | The application closes|
