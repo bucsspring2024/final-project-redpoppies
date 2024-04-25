@@ -39,6 +39,61 @@ A game where you count the stars in the sky before time runs out
 
 ### Classes
 
+import random
+
+class Star:
+    def __init__(self, x, y):
+
+        #determines the positon of the stars 
+        
+        self.x = x
+        self.y = y
+
+    def blink(self):
+
+        # Simulate blinking effect of stars
+
+        return random.choice([True, False])
+
+class Sky:
+    def __init__(self, width, height, num_stars):
+
+        #initalizes the sky
+        #args: the height and width of the players screen 
+
+        self.width = width
+        self.height = height
+        self.stars = []
+        self.generate_stars(num_stars)
+
+    def generate_stars(self, num_stars):
+
+        #creates random amount of stars on different positions on the screen 
+    
+        for _ in range(num_stars):
+            x = random.randint(0, self.width)
+            y = random.randint(0, self.height)
+            self.stars.append(Star(x, y))
+
+    def display(self):
+
+        #displays a model of what the sky looks 
+        #stars will blink on and off 
+
+        for y in range(self.height):
+            row = ""
+            for x in range(self.width):
+                if any(star.x == x and star.y == y and star.blink() for star in self.stars):
+                    row += "*"
+                else:
+                    row += " "
+            print(row)
+
+# Example usage
+night_sky = Sky(50, 20, 100)
+night_sky.display()
+
+
 - << You should have a list of each of your classes with a description >>
 
 ## ATP
