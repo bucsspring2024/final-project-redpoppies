@@ -2,7 +2,9 @@
 
 :warning: Everything between << >> needs to be replaced (remove << >> after replacing)
 
-# << Project Title >>
+# "Dreamcatcher"
+# Course Number: 110
+
 ## CS110 Final Project Spring, 2024
 
 ## Team Members
@@ -21,88 +23,104 @@ A game where you count the stars in the sky before time runs out
 
 ### Initial Design
 
-![initial gui](assets/gui.jpg)
+![Alt text](assets/InitialGUIDesign.png)
 
 ### Final Design
 
-![final gui](assets/finalgui.jpg)
+![final gui](assets/finalGUIDesign.png)
 
 ## Program Design
 
 ### Features
 
 1. Timer
-2. Play button
+2. Controlled player
 3. Randomly placed stars 
 4. Clicker feature
 5. Ending statement
 
 ### Classes
 
-import random
-
-class Star:
-    def __init__(self, x, y):
-
-        #determines the positon of the stars 
+class Player(pygame.sprite.Sprite):
+    def __init__(self, width=800, height=600):
         
-        self.x = x
-        self.y = y
+            
+        """
+        Description: Initalizes the player 
+        args: 
+        -pygame.sprite.spite arguement is being used as a base class for this "Class Player"
+        - width and height argument is used to set the parameter for the player movement of the box
+        return: None       
+    """  
+        super().__init__()
+        self.WHITE = (255, 255, 255)
+        self.image = pygame.Surface((50, 50))
+        self.image.fill(self.WHITE)
+        self.rect = self.image.get_rect()
+        self.rect.centerx = width // 2
+        self.rect.bottom = height - 10
+        self.speedx = 0
 
-    def blink(self):
+    def update(self, width=800, height=600):
+        
+        """
+        inserts the specficed function to the dictioary with the new added items in this function 
+        args: self, width=800, height=600
+        return: None
+        """
+        
+        self.speedx = 0
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            self.speedx = -5
+        if keys[pygame.K_RIGHT]:
+            self.speedx = 5
+        self.rect.x += self.speedx
+        if self.rect.right > width:
+            self.rect.right = width
+        if self.rect.left < 0:
+            self.rect.left = 0
 
-        # Simulate blinking effect of stars
 
-        return random.choice([True, False])
+class Star(pygame.sprite.Sprite):
+    def __init__(self, width=800, height=600):
+        
+        """
+    description: intializes the yellow "stars" (the boxes)
+    args: self, and  width=800
+    return: None
+    """
+        super().__init__()
+        self.WHITE = (255, 255, 255)
+        self.YELLOW = (255, 255, 0)
+        self.image = pygame.Surface((30, 30))
+        self.image.fill(self.YELLOW)
+        self.rect = self.image.get_rect()
+        self.rect.x = random.randint(0, width - self.rect.width)
+        self.rect.y = random.randint(-100, -40)
+        self.speedy = random.randint(3, 7)
 
-class Sky:
-    def __init__(self, width, height, num_stars):
-
-        #initalizes the sky
-        #args: the height and width of the players screen 
-
-        self.width = width
-        self.height = height
-        self.stars = []
-        self.generate_stars(num_stars)
-
-    def generate_stars(self, num_stars):
-
-        #creates random amount of stars on different positions on the screen 
+    def update(self, width=800, height=600):
+        
+        """
+        descritption: it resets the position of the stars and handles the different speed of the stars 
+        args: self, width = 800, and height=600
+        return: None
+        """
     
-        for _ in range(num_stars):
-            x = random.randint(0, self.width)
-            y = random.randint(0, self.height)
-            self.stars.append(Star(x, y))
+        self.rect.y += self.speedy
+        if self.rect.top > height:
+            self.rect.y = random.randint(-100, -40)
+            self.rect.x = random.randint(0, width - self.rect.width)
+            self.speedy = random.randint(3, 7)
 
-    def display(self):
-
-        #displays a model of what the sky looks 
-        #stars will blink on and off 
-
-        for y in range(self.height):
-            row = ""
-            for x in range(self.width):
-                if any(star.x == x and star.y == y and star.blink() for star in self.stars):
-                    row += "*"
-                else:
-                    row += " "
-            print(row)
-
-# Example usage
-night_sky = Sky(50, 20, 100)
-night_sky.display()
-
-
-- << You should have a list of each of your classes with a description >>
 
 ## ATP
 
 | Step                 |Procedure             |Expected Results                   |
 |----------------------|:--------------------:|----------------------------------:|
-|  1                   | Start game           |GUI window appears with a statement that describes how to play and start button appears  |
-|  2                   | click start button   | the screen goes black and stars start to randomly appear, the timer also starts, and a counter is put in the bottom right corner |
-| 3 | Players click the stars| The stars disappear and the counter goes up by 1 each time a star is clicked
-etc...
-| 4| The timer runs out (after 30 seconds)| Statement appears saying how many starts you counted, and if it's greater than 10, you win!
-|5| Screen is clicked on the "end game" button | The application closes|
+|  1                   | Start game           |GUI window appears immediately. The timer starts immediately and stars start to fall  |
+|  2                   | Click left and right arrow keys| The white box moves left and right|
+| 3 | Collect yellow "stars" | The counter in the top left goes up by 1 each time a yellow star touches the white box|
+| 4| The timer runs out (after 30 seconds)| Statement appears on the screen saying you won if you collected more than 60 stars. If not, you lose|
+|5| Screen closes | When Q key is pressed, the application closes|
